@@ -91,20 +91,25 @@ function formatDateYYYYMMDD(date) {
   return `${year}${month}${day}`;
 }
 
-// 从 "Merchant: xxxx" 中去掉前缀返回 "xxxx"
-function stripMerchantPrefix(str) {
-  if (typeof str !== 'string') return '';
-  const s = str.trim();
-  if (s.toLowerCase().startsWith('merchant:')) return s.slice(9).trim();
-  return s;
-}
+// 门店配置：新增门店时，在这里加一行即可
+//   - id       ：内部使用的门店标识（也是 invoice.bill_to 的取值）
+//   - keywords ：识别该门店的关键词，全部小写；任一关键词命中（substring 匹配）即视为该门店
+const MERCHANTS = [
+  { id: 'Austin', keywords: ['austin'] },
+  { id: 'Sutera', keywords: ['sutera'] },
+  { id: 'EcoBotanic', keywords: ['eco botanic', 'ecobotanic'] }
+];
 
-// 根据 merchant 字符串判断门店标识，返回 'Austin' / 'Sutera' / 'EcoBotanic' / ''
-function parseMerchantName(rawMerchant) {
-  const s = (rawMerchant ?? '').toString().toLowerCase();
-  if (s.includes('austin')) return 'Austin';
-  if (s.includes('sutera')) return 'Sutera';
-  if (s.includes('eco botanic') || s.includes('ecobotanic')) return 'EcoBotanic';
+// 把所有 MERCHANTS 的 id 拼成 "Austin or Sutera or EcoBotanic"，用于错误提示
+const MERCHANT_IDS_STR = MERCHANTS.map((m) => m.id).join(' or ');
+
+// 根据任意若干个原始字符串（merchant 行 / shop name / shop location 等）匹配门店
+// 返回 'Austin' / 'Sutera' / 'EcoBotanic' / ''；任一字符串包含任一 keyword 即命中
+function matchMerchant(...rawTexts) {
+  const lowers = rawTexts.map((s) => (s ?? '').toString().toLowerCase());
+  for (const m of MERCHANTS) {
+    if (m.keywords.some((kw) => lowers.some((s) => s.includes(kw)))) return m.id;
+  }
   return '';
 }
 
@@ -238,12 +243,10 @@ function processFeedmeFile(file) {
   if (!Array.isArray(fourthRow) || fourthRow.length < 1) {
     return { error: file.name + " invalid, missing 'Merchant' information at fourth row" };
   }
-  const merchant = parseMerchantName(stripMerchantPrefix(fourthRow[0]));
+  const merchant = matchMerchant(fourthRow[0]);
   if (!merchant) {
     return {
-      error:
-        file.name +
-        " invalid, unknown 'Merchant' at fourth row, expect: Austin or Sutera or Eco Botanic"
+      error: `${file.name} invalid, unknown 'Merchant' at fourth row, expect: ${MERCHANT_IDS_STR}`
     };
   }
 
@@ -349,22 +352,6 @@ function processFeedmeFile(file) {
 // 处理 TNG → report_records
 // =============================================================
 
-// parseTngShopName 确定门店名称 Austin/Sutera/EcoBotanic
-function parseTngShopName(rawName, rawLoc) {
-  const n = (rawName ?? '').toString().toLowerCase();
-  const l = (rawLoc ?? '').toString().toLowerCase();
-  if (l.includes('austin') || n.includes('austin')) return 'Austin';
-  if (l.includes('sutera') || n.includes('sutera')) return 'Sutera';
-  if (
-    l.includes('eco botanic') ||
-    n.includes('eco botanic') ||
-    l.includes('ecobotanic') ||
-    n.includes('ecobotanic')
-  )
-    return 'EcoBotanic';
-  return '';
-}
-
 function processTngFile(file) {
   const records = [];
   const rows = file?.data?.sheets?.[0]?.rows;
@@ -390,7 +377,7 @@ function processTngFile(file) {
 
     records.push({
       date: parseTransactionDate(row[cols['Transaction Datetime']]), // 多种原始日期格式统一转换为 YYYYMMDD 格式
-      shop: parseTngShopName(row[cols['Shop/Outlet Name']], row[cols['Shop/Outlet Location']]), // Austin, Sutera, EcoBotanic
+      shop: matchMerchant(row[cols['Shop/Outlet Name']], row[cols['Shop/Outlet Location']]), // Austin, Sutera, EcoBotanic
       transaction_amount: Number(row[cols['Transaction Amount (RM)']]) || 0
     });
   }
@@ -502,12 +489,10 @@ function processProductSalesFile(file) {
   if (!Array.isArray(fourthRow) || fourthRow.length < 1) {
     return { error: file.name + " invalid, missing 'Merchant' information at fourth row" };
   }
-  const merchant = parseMerchantName(stripMerchantPrefix(fourthRow[0]));
+  const merchant = matchMerchant(fourthRow[0]);
   if (!merchant) {
     return {
-      error:
-        file.name +
-        " invalid, unknown 'Merchant' at fourth row, expect: Austin or Sutera or Eco Botanic"
+      error: `${file.name} invalid, unknown 'Merchant' at fourth row, expect: ${MERCHANT_IDS_STR}`
     };
   }
 
@@ -910,7 +895,6 @@ const INVOICE_HTML_TEMPLATE = `<!DOCTYPE html>
           <div>BILL TO: {{bill_to}}</div>
           <div>Invoice ID: {{invoice_id}}</div>
           <div>Invoice Date: {{invoice_date}}</div>
-          <!--<div>Store ID: {{store_id}}</div>-->
         </div>
       </div>
 

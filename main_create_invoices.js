@@ -53,6 +53,8 @@ fs.writeFileSync(outputFile, JSON.stringify(rawData, null, 2), 'utf8');
 // 摘要打印
 console.log('输入文件:', inputFile);
 console.log('输出文件:', outputFile);
+
+let allMatch = true;
 for (let i = 0; i < rawData.length; i++) {
   const r = rawData[i];
   console.log(`\n--- item[${i}] ---`);
@@ -60,10 +62,13 @@ for (let i = 0; i < rawData.length; i++) {
   console.log('  request_error_message:', r.request_error_message || '(空)');
   if (!r.invoices) continue;
   for (const inv of r.invoices) {
+    if (!inv.total_match) allMatch = false;
     console.log(`\n  [Invoice] ${inv.id}  (${inv.bill_to}, date=${inv.date})`);
-    console.log('    grand_total:   ', inv.grand_total);
-    console.log('    total_payment: ', inv.total_payment);
-    console.log('    差额:          ', toFixed(inv.grand_total - inv.total_payment, 2));
+    console.log('    items_total:  ', inv.items_total);
+    console.log('    total_tax:    ', inv.total_tax);
+    console.log('    grand_total:  ', inv.grand_total);
+    console.log('    total_payment:', inv.total_payment);
+    console.log('    total_diff:   ', inv.total_diff, '| match:', inv.total_match);
     console.log('    --- product_item_list ---');
     for (const p of inv.product_item_list) {
       console.log(`      ${pad(p.name, 28)} ${pad(p.total, 12)} ${p.tax_rate_str}`);
@@ -75,10 +80,12 @@ for (let i = 0; i < rawData.length; i++) {
   }
 }
 
+// 总览：所有 invoice 的金额是否都对得上
+console.log('\n========================================');
+console.log(allMatch ? '✓ 所有 invoice 金额匹配' : '✗ 存在金额不匹配的 invoice');
+console.log('========================================');
+
 function pad(v, n) {
   const s = String(v);
   return s.length >= n ? s : s + ' '.repeat(n - s.length);
-}
-function toFixed(v, n) {
-  return Number(Number(v).toFixed(n));
 }
