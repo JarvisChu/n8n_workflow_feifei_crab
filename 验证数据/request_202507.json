@@ -1,0 +1,132 @@
+[
+  {
+    "headers": {
+      "host": "workflow.ccmonet.dev",
+      "connection": "keep-alive",
+      "x-forwarded-for": "10.132.0.109",
+      "x-forwarded-proto": "https",
+      "x-forwarded-host": "workflow.ccmonet.dev",
+      "x-forwarded-port": "443",
+      "x-forwarded-path": "/webhook/835a1d18-fe5d-4a69-b448-835226dad7d4-1778226826726",
+      "x-real-ip": "10.132.0.109",
+      "content-length": "4290",
+      "user-agent": "go-resty/2.14.0 (https://github.com/go-resty/resty)",
+      "accept": "application/json",
+      "content-type": "application/json",
+      "x-n8n-api-key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjN2YwZWI4Ny0xY2IxLTRlYTctODJiZi0yM2Q4N2M5NmI0NjAiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU0NTQ4NDM3fQ.1OnqrjExNA99q95RzzrFRBjT6rdEWkP_H7ca--oeqxs",
+      "x-request-id": "cc9e7738-0231-466f-a713-ea27dbea04bb",
+      "accept-encoding": "gzip"
+    },
+    "params": {},
+    "query": {},
+    "body": {
+      "id": "019e0aac-1887-71df-9632-ea8499b8f17d",
+      "user_id": "e84f9c98-d3e2-4f16-a74c-1088e35f265e",
+      "organization_id": "f70d0a37-2918-4805-9b79-f8f3dbf1846a",
+      "token": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IkpJWHo3Y0ZmZ3g3a0ZuQ1ciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL29pamJ0bnBlYXpxYWNicG9oaGhvLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJlODRmOWM5OC1kM2UyLTRmMTYtYTc0Yy0xMDg4ZTM1ZjI2NWUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc4ODk2Njc3LCJpYXQiOjE3NzgyOTE4NzcsImVtYWlsIjoiamFydmlzY2h1MDFAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJnb29nbGUiLCJwcm92aWRlcnMiOlsiZ29vZ2xlIl19LCJ1c2VyX21ldGFkYXRhIjp7ImF2YXRhcl91cmwiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NMQjdsellUY004bTBJQkhMUnRDeXZpMWQ4QVVoTW9aNHA2cVA2TlFqbzduOFB2ZHc9czk2LWMiLCJlbWFpbCI6ImphcnZpc2NodTAxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJqYXJ2aXNjaHUwMSIsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsIm5hbWUiOiJqYXJ2aXNjaHUwMSIsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xCN2x6WVRjTThtMElCSExSdEN5dmkxZDhBVWhNb1o0cDZxUDZOUWpvN244UHZkdz1zOTYtYyIsInByb3ZpZGVyX2lkIjoiMTA2MzgzMTYxODMxNjQyNjQ5MTA3Iiwic3ViIjoiMTA2MzgzMTYxODMxNjQyNjQ5MTA3In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoib2F1dGgiLCJ0aW1lc3RhbXAiOjE3NzgyOTE4Nzd9XSwic2Vzc2lvbl9pZCI6IjJlYjNhMmZjLWM2NDEtNDY2NC1iNjY2LTNhYjQxMDViN2MyZiIsImlzX2Fub255bW91cyI6ZmFsc2V9.YHQG9vVjIEisR40LqIaNT5-q9jA--7x1iiy8TR0l2Dc",
+      "input": {
+        "fields": [
+          {
+            "id": "feedme_excels",
+            "name": "[FEEDME] 收款汇总表",
+            "description": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+            "type": "file",
+            "properties": {
+              "accept": {
+                "*": [
+                  ".xlsx",
+                  ".xls",
+                  ".csv"
+                ]
+              },
+              "multiple": true
+            },
+            "hidden": false,
+            "value": [
+              {
+                "fileName": "[FEEDME] 收款汇总表 Jul 2025 Austin.xlsx",
+                "id": "019e0aab-8bbc-7a9c-8ac6-b67572a30da6",
+                "size": 22775,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e0aab-9335-7e26-825c-9e30adf940f6/019e0aab-9335-7e26-825c-9e3153d43b2f.xlsx",
+                "type": [],
+                "upload_at": 1778295475133
+              },
+              {
+                "fileName": "[FEEDME] 收款汇总表 Jul 2025 Sutera.xlsx",
+                "id": "019e0aab-8bbd-70f9-85ca-0a77a6ad6048",
+                "size": 22206,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e0aab-9335-7e26-825c-9e32e663233a/019e0aab-9336-7eeb-bbbd-6c8e61f15d72.xlsx",
+                "type": [],
+                "upload_at": 1778295475133
+              }
+            ]
+          },
+          {
+            "id": "tng_merchant_report_excel",
+            "name": "TNG Merchant Report 表",
+            "description": "所有门店共用一张 TNG Merchant Report 表",
+            "type": "file",
+            "properties": {
+              "accept": {
+                "*": [
+                  ".xlsx",
+                  ".xls",
+                  ".csv"
+                ]
+              },
+              "multiple": false
+            },
+            "hidden": false,
+            "value": [
+              {
+                "fileName": "TNG Merchant Report Jul.csv",
+                "id": "019e0aab-bee6-78ab-877e-bf98f93467d0",
+                "size": 68165,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e0aab-c600-7085-b014-71be6d7d1985/019e0aab-c600-7085-b014-71bfa76d36ab.csv",
+                "type": [],
+                "upload_at": 1778295488230
+              }
+            ]
+          },
+          {
+            "id": "product_sales_report_excels",
+            "name": "Product Sales Report 表",
+            "description": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+            "type": "file",
+            "properties": {
+              "accept": {
+                "*": [
+                  ".xlsx",
+                  ".xls",
+                  ".csv"
+                ]
+              },
+              "multiple": true
+            },
+            "hidden": false,
+            "value": [
+              {
+                "fileName": "Product Sales Report Jul Austin.xlsx",
+                "id": "019e0aac-0422-7c0c-9f16-e72b31ae65d5",
+                "size": 50836,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e0aac-0893-7212-9aec-5ad706454a06/019e0aac-0893-7212-9aec-5ad87c7c5460.xlsx",
+                "type": [],
+                "upload_at": 1778295505954
+              },
+              {
+                "fileName": "Product Sales Report Jul Sutera.xlsx",
+                "id": "019e0aac-0422-7c0c-9f16-e72c42a5a602",
+                "size": 46049,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e0aac-0893-7212-9aec-5ad91a567bb5/019e0aac-0893-7212-9aec-5adad3819bd1.xlsx",
+                "type": [],
+                "upload_at": 1778295505954
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "webhookUrl": "https://workflow.ccmonet.dev/webhook/835a1d18-fe5d-4a69-b448-835226dad7d4-1778226826726",
+    "executionMode": "production"
+  }
+]
