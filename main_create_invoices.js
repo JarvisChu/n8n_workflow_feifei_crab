@@ -73,10 +73,15 @@ for (let i = 0; i < rawData.length; i++) {
     for (const p of inv.product_item_list) {
       console.log(`      ${pad(p.name, 28)} ${pad(p.total, 12)} ${p.tax_rate_str}`);
     }
+    console.log(`      ${pad('items_total (合计)', 28)} ${pad(inv.items_total, 12)}`);
+    console.log(`      ${pad('+ total_tax', 28)} ${pad(inv.total_tax, 12)}`);
+    console.log(`      ${pad('= grand_total', 28)} ${pad(inv.grand_total, 12)}`);
+
     console.log('    --- payment_list ---');
     for (const p of inv.payment_list) {
       console.log(`      ${pad(p.pay_type, 28)} ${pad(p.total, 12)}`);
     }
+    console.log(`      ${pad('total_payment (合计)', 28)} ${pad(inv.total_payment, 12)}`);
   }
 }
 

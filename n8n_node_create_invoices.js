@@ -14,8 +14,12 @@ function isValidNotEmptyString(value) {
   return isValidString(value) && value.trim() !== '';
 }
 
-// 判断字符串是否能转成数字
+// 判断字符串是否能转成有效的数字（空字符串、null、undefined 都视为非数字）
+// 注意：原生 Number('') === 0、Number(null) === 0、Number('  ') === 0 都不是 NaN，
+// 这里显式排除掉，避免把空白当 0 处理
 function isNumber(str) {
+  if (str === null || str === undefined) return false;
+  if (typeof str === 'string' && str.trim() === '') return false;
   return !Number.isNaN(Number(str));
 }
 
@@ -24,10 +28,10 @@ function toFixedNumber(num, fixed) {
   return Number(Number(num).toFixed(fixed));
 }
 
-// 忽略大小写比较两个字符串是否相等
-function equalsIgnoreCaseSafe(a, b) {
+// 忽略大小写比较两个字符串是否相等（仅对 ASCII 即可，无需 localeCompare）
+function equalsIgnoreCase(a, b) {
   if (typeof a !== 'string' || typeof b !== 'string') return false;
-  return a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0;
+  return a.toLowerCase() === b.toLowerCase();
 }
 
 // parseInvoiceDate 从 "Date: 01/07/2025 - 31/07/2025" 中获取 "31/07/2025" 对应的日期
@@ -390,12 +394,16 @@ function processTngFile(file) {
 // （逻辑参考 tmp_n8n_node_process.js）
 // =============================================================
 
+// TOUCH N GO 这个支付方式名在不同 feedme 表里可能大小写/空格略有差异，
+// 这里用 equalsIgnoreCase 匹配，避免变体导致 TNG 数据静默丢失
+const TOUCH_N_GO = 'TOUCH N GO';
+
 function aggregateInvoices(invoices, report_records) {
   // 1. 将每个 invoice 中的 'TOUCH N GO' 项复制出来
   for (const inv of invoices) {
     inv.original_touch_n_go_amount = 0;
     for (const p of inv.payment_list) {
-      if (p.pay_type === 'TOUCH N GO') {
+      if (equalsIgnoreCase(p.pay_type, TOUCH_N_GO)) {
         inv.original_touch_n_go_amount = p.total; // 复制出来
         p.total = 0; // 重置
       }
@@ -407,14 +415,14 @@ function aggregateInvoices(invoices, report_records) {
     // 查找对应的 invoice，将 report 中的记录汇总到该 invoice 中
     for (const inv of invoices) {
       // 比较 shop 名字，找到对应的 inv
-      if (!equalsIgnoreCaseSafe(inv.bill_to, rec.shop)) continue; // 不相同，跳过
+      if (!equalsIgnoreCase(inv.bill_to, rec.shop)) continue; // 不相同，跳过
 
       // 比较 date，判断是否是同一个月的
       if (rec.date.slice(0, 6) !== inv.date_yymmdd.slice(0, 6)) continue; // 前六位不等，即月份不相同，跳过
 
       // 找到 'TOUCH N GO'，汇总到该项中
       for (const p of inv.payment_list) {
-        if (p.pay_type === 'TOUCH N GO') {
+        if (equalsIgnoreCase(p.pay_type, TOUCH_N_GO)) {
           p.total = toFixedNumber(p.total + rec.transaction_amount, 2);
           break;
         }
@@ -427,7 +435,7 @@ function aggregateInvoices(invoices, report_records) {
   for (const inv of invoices) {
     let cur = 0;
     for (const p of inv.payment_list) {
-      if (p.pay_type === 'TOUCH N GO') cur = p.total;
+      if (equalsIgnoreCase(p.pay_type, TOUCH_N_GO)) cur = p.total;
     }
 
     // delivery_fee = cur - old
@@ -536,14 +544,15 @@ function processProductSalesFile(file) {
     const net = gross + bill_discount + item_discount;
     if (net === 0) continue; // 避免除以 0
 
-    // 税率 = SST / (Gross + Bill discount + Item discount)，保留两位小数
-    const tax_rate = Number((sst / net).toFixed(2));
+    // 税率 = SST / (Gross + Bill discount + Item discount)
+    // 直接转成 "6%" / "8%" 这种百分比字符串再比较，避免浮点 === 的精度隐患
+    const tax_rate_pct = Math.round((sst / net) * 100) + '%';
 
-    if (tax_rate === 0.06) {
+    if (tax_rate_pct === '6%') {
       summary_items['Non-Alchole Sales'].total += gross;
       summary_items['Non-Alchole Discount'].total += discount;
       summary_items['Non-Alchole SC'].total += sc;
-    } else if (tax_rate === 0.08) {
+    } else if (tax_rate_pct === '8%') {
       summary_items['Alchole Sales'].total += gross;
       summary_items['Alchole Discount'].total += discount;
       summary_items['Alchole SC'].total += sc;
@@ -1036,7 +1045,7 @@ for (const item of $input.all()) {
       step_error = res.error;
       break;
     }
-    if (invoices.some((x) => equalsIgnoreCaseSafe(x.bill_to, res.invoice.bill_to))) {
+    if (invoices.some((x) => equalsIgnoreCase(x.bill_to, res.invoice.bill_to))) {
       step_error = 'duplicate feedme merchant: ' + res.invoice.bill_to;
       break;
     }
@@ -1078,7 +1087,7 @@ for (const item of $input.all()) {
       step_error = res.error;
       break;
     }
-    const inv = invoices.find((x) => equalsIgnoreCaseSafe(x.bill_to, res.merchant));
+    const inv = invoices.find((x) => equalsIgnoreCase(x.bill_to, res.merchant));
     if (!inv) {
       step_error = 'no matching feedme invoice for product_sales merchant: ' + res.merchant;
       break;

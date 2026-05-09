@@ -91,3 +91,25 @@ done
 
 - 当我提到 **"金额不匹配"**，指的是某张 invoice 的 `total_match` 为 `false`、`total_diff` 不为 `0`。
   即 `grand_total !== total_payment`，账目对不上，需要排查。
+
+## 关于 `total_match` 校验的含义
+
+`total_match` 校验的是 `grand_total === total_payment`，**本质是对 feedme 表内部一致性的验证**。
+
+代数推导（buckets 抵消、Tax Rounding 抵消 SST 替换、Rounding 抵消 product_sales 与 feedme 的 Gross/SC/Discount 差异后）：
+
+```
+grand_total - total_payment = F_items - P_feedme
+```
+
+其中：
+- `F_items` = feedme summary 行 Nett 列**之前**所有 items 列的和（Gross + Discount + SST + SC + Other Charge + Delivery fee + Rounding）
+- `P_feedme` = feedme summary 行 Nett 列**之后**所有 payment 列的和（AMEX + CASH + ... + VISA）
+
+只要 feedme 报表自身账平（`F_items == P_feedme == feedme.Nett`），`total_match` 就是 true。所以这个校验真正在防的是：
+
+1. feedme 报表本身数据不一致 / 漏算 / 错位
+2. 我们解析时漏读了 column（如新出现的支付方式没归到 payment_list）
+3. 后续代码改动破坏了 buckets / Tax Rounding / Rounding 公式中的某一项
+
+不是装饰品，是有效的 sanity check。
