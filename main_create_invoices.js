@@ -20,7 +20,6 @@ const ALLOWED_ITEM_FIELDS = [
   'request_user_id',
   'request_organization_id',
   'request_file_list',
-  'request_valid',
   'request_error_message'
 ];
 for (const item of rawData) {
@@ -58,7 +57,6 @@ let allMatch = true;
 for (let i = 0; i < rawData.length; i++) {
   const r = rawData[i];
   console.log(`\n--- item[${i}] ---`);
-  console.log('  request_valid:', r.request_valid);
   console.log('  request_error_message:', r.request_error_message || '(空)');
   if (!r.invoices) continue;
   for (const inv of r.invoices) {

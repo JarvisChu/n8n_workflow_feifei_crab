@@ -1025,11 +1025,11 @@ function buildInvoiceHtml(invoice) {
 // =============================================================
 
 for (const item of $input.all()) {
-  // 前置：必须 request_valid=true 且有 request_file_list
-  if (item.json.request_valid !== true) continue;
+  // 前置：上游 parse_request 节点已校验通过（request_error_message === ''）
+  // 且 request_file_list 必须存在
+  if (item.json.request_error_message) continue;
   const file_list = item.json.request_file_list;
   if (!Array.isArray(file_list)) {
-    item.json.request_valid = false;
     item.json.request_error_message = 'request_file_list missing';
     continue;
   }
@@ -1053,7 +1053,6 @@ for (const item of $input.all()) {
     invoices.push(res.invoice);
   }
   if (isValidNotEmptyString(step_error)) {
-    item.json.request_valid = false;
     item.json.request_error_message = step_error;
     continue;
   }
@@ -1070,7 +1069,6 @@ for (const item of $input.all()) {
     report_records.push(...res.records);
   }
   if (isValidNotEmptyString(step_error)) {
-    item.json.request_valid = false;
     item.json.request_error_message = step_error;
     continue;
   }
@@ -1102,7 +1100,6 @@ for (const item of $input.all()) {
     applyProductSalesToInvoice(inv, res.summary_items);
   }
   if (isValidNotEmptyString(step_error)) {
-    item.json.request_valid = false;
     item.json.request_error_message = step_error;
     continue;
   }
@@ -1125,7 +1122,6 @@ for (const item of $input.all()) {
     }
   }
   if (isValidNotEmptyString(step_error)) {
-    item.json.request_valid = false;
     item.json.request_error_message = step_error;
     continue;
   }

@@ -84,8 +84,7 @@ done
 
 每条 item 输出后应当满足：
 
-- `request_valid === true`
-- `request_error_message === ''`
+- `request_error_message === ''`（空字符串表示通过；非空表示具体错误）
 
 ## 约定
 

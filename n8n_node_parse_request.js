@@ -47,10 +47,13 @@ function parseFieldFiles(fields, id) {
 }
 
 // 检查请求参数是否合法，同时将请求参数解析并保存到 json.request_xxx 中
+// 约定：request_error_message === '' 表示校验通过；非空字符串表示校验失败原因
 for (const item of $input.all()) {
+  // 默认置空，下面任一分支若失败会覆盖
+  item.json.request_error_message = '';
+
   const body = item.json.body;
   if (isNullOrUndefined(body)) {
-    item.json.request_valid = false;
     item.json.request_error_message = 'body required';
     continue;
   }
@@ -58,7 +61,6 @@ for (const item of $input.all()) {
   // 必须包含 user_id 字段
   const user_id = body.user_id;
   if (!isValidNotEmptyString(user_id)) {
-    item.json.request_valid = false;
     item.json.request_error_message = 'user_id required';
     continue;
   }
@@ -67,7 +69,6 @@ for (const item of $input.all()) {
   // 必须包含 organization_id 字段
   const organization_id = body.organization_id;
   if (!isValidNotEmptyString(organization_id)) {
-    item.json.request_valid = false;
     item.json.request_error_message = 'organization_id required';
     continue;
   }
@@ -76,7 +77,6 @@ for (const item of $input.all()) {
   // 其它和该 workflow 相关的参数
   const fields = body.input?.fields;
   if (!Array.isArray(fields)) {
-    item.json.request_valid = false;
     item.json.request_error_message = 'invalid input.fields';
     continue;
   }
@@ -98,14 +98,11 @@ for (const item of $input.all()) {
     all_files.push(...res.file_list);
   }
   if (isValidNotEmptyString(error_message)) {
-    item.json.request_valid = false;
     item.json.request_error_message = error_message;
     continue;
   }
 
   item.json.request_file_list = all_files;
-  item.json.request_valid = true;
-  item.json.request_error_message = '';
 }
 
 return $input.all();

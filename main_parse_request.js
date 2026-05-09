@@ -51,9 +51,8 @@ console.log('输出文件:', outputFile);
 for (let i = 0; i < cleanedData.length; i++) {
   const r = cleanedData[i];
   console.log(`\n--- item[${i}] ---`);
-  console.log('  request_valid:', r.request_valid);
   console.log('  request_error_message:', r.request_error_message || '(空)');
-  if (r.request_valid) {
+  if (!r.request_error_message) {
     console.log('  request_user_id:', r.request_user_id);
     console.log('  request_organization_id:', r.request_organization_id);
     console.log('  request_file_list 数量:', r.request_file_list?.length ?? 0);
