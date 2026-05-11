@@ -1,0 +1,153 @@
+[
+  {
+    "headers": {
+      "host": "workflow.ccmonet.dev",
+      "connection": "keep-alive",
+      "x-forwarded-for": "10.132.3.19",
+      "x-forwarded-proto": "https",
+      "x-forwarded-host": "workflow.ccmonet.dev",
+      "x-forwarded-port": "443",
+      "x-forwarded-path": "/webhook/835a1d18-fe5d-4a69-b448-835226dad7d4-1778470456157",
+      "x-real-ip": "10.132.3.19",
+      "content-length": "4891",
+      "content-type": "application/json",
+      "x-n8n-api-key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjN2YwZWI4Ny0xY2IxLTRlYTctODJiZi0yM2Q4N2M5NmI0NjAiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU0NTQ4NDM3fQ.1OnqrjExNA99q95RzzrFRBjT6rdEWkP_H7ca--oeqxs",
+      "x-request-id": "b04e0d3a-9164-4646-8df2-1d74427bff77",
+      "user-agent": "go-resty/2.14.0 (https://github.com/go-resty/resty)",
+      "accept": "application/json",
+      "accept-encoding": "gzip"
+    },
+    "params": {},
+    "query": {},
+    "body": {
+      "id": "019e1523-4fe3-74da-9e3a-3c368e0cc63f",
+      "user_id": "e84f9c98-d3e2-4f16-a74c-1088e35f265e",
+      "organization_id": "f70d0a37-2918-4805-9b79-f8f3dbf1846a",
+      "token": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IkpJWHo3Y0ZmZ3g3a0ZuQ1ciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL29pamJ0bnBlYXpxYWNicG9oaGhvLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJlODRmOWM5OC1kM2UyLTRmMTYtYTc0Yy0xMDg4ZTM1ZjI2NWUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzc5MDc0MjA0LCJpYXQiOjE3Nzg0Njk0MDQsImVtYWlsIjoiamFydmlzY2h1MDFAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJnb29nbGUiLCJwcm92aWRlcnMiOlsiZ29vZ2xlIl19LCJ1c2VyX21ldGFkYXRhIjp7ImF2YXRhcl91cmwiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NMQjdsellUY004bTBJQkhMUnRDeXZpMWQ4QVVoTW9aNHA2cVA2TlFqbzduOFB2ZHc9czk2LWMiLCJlbWFpbCI6ImphcnZpc2NodTAxQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJqYXJ2aXNjaHUwMSIsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsIm5hbWUiOiJqYXJ2aXNjaHUwMSIsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xCN2x6WVRjTThtMElCSExSdEN5dmkxZDhBVWhNb1o0cDZxUDZOUWpvN244UHZkdz1zOTYtYyIsInByb3ZpZGVyX2lkIjoiMTA2MzgzMTYxODMxNjQyNjQ5MTA3Iiwic3ViIjoiMTA2MzgzMTYxODMxNjQyNjQ5MTA3In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoib2F1dGgiLCJ0aW1lc3RhbXAiOjE3Nzg0Njk0MDR9XSwic2Vzc2lvbl9pZCI6IjBiYjI4NWI0LWU2Y2YtNDNlZi1hZDZiLWJlYWFlZjk1NmRiMiIsImlzX2Fub255bW91cyI6ZmFsc2V9.seD3LH427qM75_HAcu8TWVII4iRgJ3i0eDwDomCjt9E",
+      "input": {
+        "fields": [
+          {
+            "id": "feedme_excels",
+            "name": "[FEEDME] 收款汇总表",
+            "description": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+            "type": "file",
+            "properties": {
+              "accept": {
+                "*": [
+                  ".xlsx",
+                  ".xls",
+                  ".csv"
+                ]
+              },
+              "multiple": true
+            },
+            "hidden": false,
+            "value": [
+              {
+                "fileName": "[FEEDME] 收款汇总表 Jul 2025 Austin.xlsx",
+                "id": "019e1522-e27a-7fea-9336-483f970ef6e1",
+                "size": 22775,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1522-f3cc-76f7-870a-142684b0f3a1/019e1522-f3cd-7f29-8d88-80a9635c4240.xlsx",
+                "type": [],
+                "upload_at": 1778471068282
+              },
+              {
+                "fileName": "[FEEDME] 收款汇总表 Jul 2025 Sutera.xlsx",
+                "id": "019e1522-e27a-7fea-9336-48402956ec6d",
+                "size": 22206,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1522-f3cd-7f29-8d88-80aa15f01755/019e1522-f3cd-7f29-8d88-80aba88942f1.xlsx",
+                "type": [],
+                "upload_at": 1778471068282
+              },
+              {
+                "fileName": "[FEEDME] 收款汇总表 Sep 2025 Austin.xlsx",
+                "id": "019e1522-e27a-7fea-9336-484118a5ea9d",
+                "size": 17938,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1522-f3cd-7f29-8d88-80acc75bfd63/019e1522-f3cd-7f29-8d88-80adf32b4644.xlsx",
+                "type": [],
+                "upload_at": 1778471068282
+              },
+              {
+                "fileName": "[FEEDME] 收款汇总表 Sep 2025 Eco.xlsx",
+                "id": "019e1522-e27a-7fea-9336-48422f014649",
+                "size": 17933,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1522-f3cd-7f29-8d88-80ae89f9948f/019e1522-f3cd-7f29-8d88-80afb4c1d00b.xlsx",
+                "type": [],
+                "upload_at": 1778471068282
+              },
+              {
+                "fileName": "[FEEDME] 收款汇总表 Sep 2025 Sutera.xlsx",
+                "id": "019e1522-e27a-7fea-9336-4843bd7ffe3f",
+                "size": 16790,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1522-f3cd-7f29-8d88-80b0d5d9a13a/019e1522-f3cd-7f29-8d88-80b136461803.xlsx",
+                "type": [],
+                "upload_at": 1778471068282
+              }
+            ]
+          },
+          {
+            "id": "product_sales_report_excels",
+            "name": "Product Sales Report 表",
+            "description": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+            "type": "file",
+            "properties": {
+              "accept": {
+                "*": [
+                  ".xlsx",
+                  ".xls",
+                  ".csv"
+                ]
+              },
+              "multiple": true
+            },
+            "hidden": false,
+            "value": [
+              {
+                "fileName": "Product Sales Report Jul Austin.xlsx",
+                "id": "019e1523-27cd-77e3-aaf0-00b130ae067e",
+                "size": 50836,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1523-33ff-7a8d-8721-00d8c08ababb/019e1523-33ff-7a8d-8721-00d93c3f9701.xlsx",
+                "type": [],
+                "upload_at": 1778471086029
+              },
+              {
+                "fileName": "Product Sales Report Jul Sutera.xlsx",
+                "id": "019e1523-27cd-77e3-aaf0-00b2fcf9f03b",
+                "size": 46049,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1523-33ff-7a8d-8721-00dadbb4ded0/019e1523-33ff-7a8d-8721-00dbfd4f2640.xlsx",
+                "type": [],
+                "upload_at": 1778471086029
+              },
+              {
+                "fileName": "Product Sales Report Sep Austin.xlsx",
+                "id": "019e1523-27cd-77e3-aaf0-00b391cc9325",
+                "size": 43999,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1523-33ff-7a8d-8721-00dc47147965/019e1523-33ff-7a8d-8721-00ddbec6d53b.xlsx",
+                "type": [],
+                "upload_at": 1778471086029
+              },
+              {
+                "fileName": "Product Sales Report Sep Eco.xlsx",
+                "id": "019e1523-27cd-77e3-aaf0-00b423f5098b",
+                "size": 42761,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1523-33ff-7a8d-8721-00de74cbef7a/019e1523-33ff-7a8d-8721-00dfb188b360.xlsx",
+                "type": [],
+                "upload_at": 1778471086029
+              },
+              {
+                "fileName": "Product Sales Report Sep Sutera.xlsx",
+                "id": "019e1523-27cd-77e3-aaf0-00b54dfa21e3",
+                "size": 38273,
+                "source": "f70d0a37-2918-4805-9b79-f8f3dbf1846a/019e1523-33ff-7a8d-8721-00e0f8b73768/019e1523-33ff-7a8d-8721-00e19068f8e8.xlsx",
+                "type": [],
+                "upload_at": 1778471086030
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "webhookUrl": "https://workflow.ccmonet.dev/webhook/835a1d18-fe5d-4a69-b448-835226dad7d4-1778470456157",
+    "executionMode": "production"
+  }
+]

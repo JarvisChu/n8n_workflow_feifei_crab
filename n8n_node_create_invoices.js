@@ -1034,8 +1034,8 @@ for (const item of $input.all()) {
     continue;
   }
 
-  // 1. 处理 feedme → invoices（每个 merchant 一张 invoice）
-  //    顺便记录每个 merchant 的 feedme 月份，并检测重复
+  // 1. 处理 feedme → invoices（每个 (merchant, 月份) 一张 invoice）
+  //    支持同一 merchant 的多个月份；按 (merchant, yymm) 唯一去重
   const invoices = [];
   let step_error = '';
   for (const file of file_list) {
@@ -1045,11 +1045,21 @@ for (const item of $input.all()) {
       step_error = res.error;
       break;
     }
-    if (invoices.some((x) => equalsIgnoreCase(x.bill_to, res.invoice.bill_to))) {
-      step_error = 'duplicate feedme merchant: ' + res.invoice.bill_to;
+    res.invoice.feedme_yymm = res.invoice.date_yymmdd.slice(0, 6); // 记录 feedme 月份
+    if (
+      invoices.some(
+        (x) =>
+          equalsIgnoreCase(x.bill_to, res.invoice.bill_to) &&
+          x.feedme_yymm === res.invoice.feedme_yymm
+      )
+    ) {
+      step_error =
+        'duplicate feedme merchant+month: ' +
+        res.invoice.bill_to +
+        ' ' +
+        res.invoice.feedme_yymm;
       break;
     }
-    res.invoice.feedme_yymm = res.invoice.date_yymmdd.slice(0, 6); // 记录 feedme 月份
     invoices.push(res.invoice);
   }
   if (isValidNotEmptyString(step_error)) {
@@ -1085,15 +1095,22 @@ for (const item of $input.all()) {
       step_error = res.error;
       break;
     }
-    const inv = invoices.find((x) => equalsIgnoreCase(x.bill_to, res.merchant));
+    // 按 (merchant, yymm) 匹配对应的 feedme invoice
+    const inv = invoices.find(
+      (x) => equalsIgnoreCase(x.bill_to, res.merchant) && x.feedme_yymm === res.yymm
+    );
     if (!inv) {
-      step_error = 'no matching feedme invoice for product_sales merchant: ' + res.merchant;
+      step_error =
+        'no matching feedme invoice for product_sales merchant+month: ' +
+        res.merchant +
+        ' ' +
+        res.yymm;
       break;
     }
-    // ps_yymm 已有值，说明之前已经有同一 merchant 的 product_sales 文件匹配过这张 invoice，
-    // 即上传了两份 merchant 相同的 product_sales_report
+    // ps_yymm 已有值，说明之前已经有同一 (merchant, 月份) 的 product_sales 文件匹配过这张 invoice
     if (inv.ps_yymm) {
-      step_error = 'duplicate product_sales_report merchant: ' + res.merchant;
+      step_error =
+        'duplicate product_sales_report merchant+month: ' + res.merchant + ' ' + res.yymm;
       break;
     }
     inv.ps_yymm = res.yymm;
@@ -1104,20 +1121,16 @@ for (const item of $input.all()) {
     continue;
   }
 
-  // 5. 校验：每个 merchant 必须同时有 feedme 和 product_sales，且月份一致
+  // 5. 校验：每个 (merchant, 月份) 必须同时有 feedme 和 product_sales
+  //    （月份一致性由 step 4 的 (merchant, yymm) 匹配天然保证，无需再检查）
   for (const inv of invoices) {
     if (!inv.ps_yymm) {
-      step_error = 'merchant ' + inv.bill_to + ' has feedme but missing product_sales_report';
-      break;
-    }
-    if (inv.feedme_yymm !== inv.ps_yymm) {
       step_error =
         'merchant ' +
         inv.bill_to +
-        ' month mismatch: feedme=' +
+        ' month ' +
         inv.feedme_yymm +
-        ', product_sales=' +
-        inv.ps_yymm;
+        ' has feedme but missing product_sales_report';
       break;
     }
   }

@@ -44,6 +44,10 @@
 
 > `tng_merchant_report_excel`（TNG Merchant Report）暂不处理：相关解析/汇总代码已在 `n8n_node_parse_request.js` 与 `n8n_node_create_invoices.js` 中注释保留，后续如需启用直接取消注释即可。`TOUCH N GO` 的金额当前直接取自 feedme 表对应的支付列。
 
+支持同一 merchant 上传**多个月份**的报表，每个月单独生成一张 invoice：
+- 唯一键为 `(merchant, 月份)`，因此同一 merchant 的多个月份 feedme/product_sales 不再视为重复。
+- 每个 `(merchant, 月份)` 必须同时具备 feedme 和 product_sales 文件，否则报错。
+
 ## 本地运行
 
 ### parse_request
