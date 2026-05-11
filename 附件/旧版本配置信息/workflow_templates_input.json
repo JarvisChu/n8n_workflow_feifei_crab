@@ -1,0 +1,91 @@
+{
+  "fields": [
+    {
+      "id": "feedme_excels",
+      "name": {
+        "en": "[FEEDME] 收款汇总表",
+        "es": "[FEEDME] 收款汇总表",
+        "ja": "[FEEDME] 收款汇总表",
+        "th": "[FEEDME] 收款汇总表",
+        "zh": "[FEEDME] 收款汇总表"
+      },
+      "type": "file",
+      "value": [],
+      "properties": {
+        "accept": {
+          "*": [
+            ".xlsx",
+            ".xls",
+            ".csv"
+          ]
+        },
+        "multiple": true
+      },
+      "description": {
+        "en": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+        "es": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+        "ja": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+        "th": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应",
+        "zh": "支持上传多张收款汇总表，每张汇总表对应一个门店，需要和Product Sales Report 表中的门店一一对应"
+      }
+    },
+    {
+      "id": "tng_merchant_report_excel",
+      "name": {
+        "en": "TNG Merchant Report 表",
+        "es": "TNG Merchant Report 表",
+        "ja": "TNG Merchant Report 表",
+        "th": "TNG Merchant Report 表",
+        "zh": "TNG Merchant Report 表"
+      },
+      "type": "file",
+      "value": [],
+      "properties": {
+        "accept": {
+          "*": [
+            ".xlsx",
+            ".xls",
+            ".csv"
+          ]
+        },
+        "multiple": false
+      },
+      "description": {
+        "en": "所有门店共用一张 TNG Merchant Report 表",
+        "es": "所有门店共用一张 TNG Merchant Report 表",
+        "ja": "所有门店共用一张 TNG Merchant Report 表",
+        "th": "所有门店共用一张 TNG Merchant Report 表",
+        "zh": "所有门店共用一张 TNG Merchant Report 表"
+      }
+    },
+    {
+      "id": "product_sales_report_excels",
+      "name": {
+        "en": "Product Sales Report 表",
+        "es": "Product Sales Report 表",
+        "ja": "Product Sales Report 表",
+        "th": "Product Sales Report 表",
+        "zh": "Product Sales Report 表"
+      },
+      "type": "file",
+      "value": [],
+      "properties": {
+        "accept": {
+          "*": [
+            ".xlsx",
+            ".xls",
+            ".csv"
+          ]
+        },
+        "multiple": true
+      },
+      "description": {
+        "en": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+        "es": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+        "ja": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+        "th": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应",
+        "zh": "支持上传多个 Product Sales Report 表，每张表对应一个门店，需要和 [FEEDME] 收款汇总表中的门店一一对应"
+      }
+    }
+  ]
+}
