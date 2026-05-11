@@ -35,6 +35,15 @@
 
 `n8n_node_xxx.js` 文件都是运行在 n8n Code 节点上的 javascript 代码。`for (const item of $input.all())` 是代码的入口，`$input` 在 n8n 环境里就是上游节点传过来的数据，`item.json` 是其中一条 item 的 payload。
 
+## 当前处理范围
+
+请求中的 `input.fields` 目前只处理：
+
+- `feedme_excels` —— FEEDME 收款汇总表（每张对应一个门店）
+- `product_sales_report_excels` —— Product Sales Report（与 FEEDME 一一对应）
+
+> `tng_merchant_report_excel`（TNG Merchant Report）暂不处理：相关解析/汇总代码已在 `n8n_node_parse_request.js` 与 `n8n_node_create_invoices.js` 中注释保留，后续如需启用直接取消注释即可。`TOUCH N GO` 的金额当前直接取自 feedme 表对应的支付列。
+
 ## 本地运行
 
 ### parse_request

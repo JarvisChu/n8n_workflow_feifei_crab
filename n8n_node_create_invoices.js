@@ -1057,24 +1057,24 @@ for (const item of $input.all()) {
     continue;
   }
 
-  // 2. 处理 TNG → report_records
-  const report_records = [];
-  for (const file of file_list) {
-    if (file.id !== 'tng_merchant_report_excel') continue;
-    const res = processTngFile(file);
-    if (res.error) {
-      step_error = res.error;
-      break;
-    }
-    report_records.push(...res.records);
-  }
-  if (isValidNotEmptyString(step_error)) {
-    item.json.request_error_message = step_error;
-    continue;
-  }
+  // 2. 处理 TNG → report_records  —— 暂不处理（保留以备后续启用）
+  // const report_records = [];
+  // for (const file of file_list) {
+  //   if (file.id !== 'tng_merchant_report_excel') continue;
+  //   const res = processTngFile(file);
+  //   if (res.error) {
+  //     step_error = res.error;
+  //     break;
+  //   }
+  //   report_records.push(...res.records);
+  // }
+  // if (isValidNotEmptyString(step_error)) {
+  //   item.json.request_error_message = step_error;
+  //   continue;
+  // }
 
-  // 3. 汇总（TOUCH N GO 替换 / delivery fee 计算）
-  aggregateInvoices(invoices, report_records);
+  // 3. 汇总（TOUCH N GO 替换 / delivery fee 计算）—— 依赖 TNG 数据，暂不处理
+  // aggregateInvoices(invoices, report_records);
 
   // 4. 处理 product_sales_report：按税率汇总，替换 Gross/Discount/SC
   //    顺便把对应 invoice 的 product_sales 月份记下来

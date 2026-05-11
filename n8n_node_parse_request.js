@@ -86,7 +86,7 @@ for (const item of $input.all()) {
   const all_files = [];
   const file_field_ids = [
     'feedme_excels', // FEEDME 收款汇总表（每张对应一个门店）
-    'tng_merchant_report_excel', // TNG Merchant Report excel 文件
+    // 'tng_merchant_report_excel', // TNG Merchant Report excel 文件 —— 暂不处理（保留以备后续启用）
     'product_sales_report_excels' // Product Sales Report excel 文件（与 FEEDME 收款汇总表一一对应）
   ];
   for (const field_id of file_field_ids) {
